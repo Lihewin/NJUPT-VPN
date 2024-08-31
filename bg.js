@@ -40,8 +40,8 @@ async function encrypt(domainWithPort) {
 // 监听 action 点击事件
 chrome.action.onClicked.addListener(async function (tab) {
     // 目标 VPN 地址前缀
-    const httpsVpnPrefix = "https://client.vpn.njupt.edu.cn:8443/https/webvpn";
-    const httpVpnPrefix = "https://client.vpn.njupt.edu.cn:8443/http/webvpn";
+    const httpsVpnPrefix = "https://vpn.njupt.edu.cn:8443/https/webvpn";
+    const httpVpnPrefix = "https://vpn.njupt.edu.cn:8443/http/webvpn";
 
     // 解析当前 URL
     let url = new URL(tab.url);
