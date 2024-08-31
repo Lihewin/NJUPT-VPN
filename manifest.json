@@ -17,6 +17,7 @@
 	"homepage_url": "https://github.com/Lihewin/NJUPT-VPN",
 	"incognito": "split",
 	"permissions": [
-		"tabs"
+		"tabs",
+		"scripting"
 	]
 }

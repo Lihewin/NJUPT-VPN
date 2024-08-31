@@ -71,11 +71,5 @@ chrome.action.onClicked.addListener(async function (tab) {
             // 跳转到新的 URL
             chrome.tabs.create({ url: newUrl });
         }
-    } else {
-        // 不支持的协议
-        chrome.scripting.executeScript({
-            target: { tabId: tab.id },
-            func: () => alert("不支持的协议！")
-        });
     }
 });
