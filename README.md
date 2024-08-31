@@ -50,7 +50,7 @@ Set-ItemProperty -Path $chromiumKey -Name "1" -Value $chromiumExtensionID
 
 您也可以clone项目并直接以开发者身份加载。
 
-总而言之请注意，这个crx的id为`fds`。
+总而言之请注意，这个crx的id为`dlokedikbaeopgkbbhlfgeiiaapjiiek`。
 
 ## 使用说明
 
