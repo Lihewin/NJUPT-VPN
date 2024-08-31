@@ -27,15 +27,21 @@
 ```powershell
 # 设置 Chrome 扩展允许列表
 $chromeKey = "HKLM:\SOFTWARE\Policies\Google\Chrome\ExtensionInstallAllowlist"
-$chromeExtensionID = "dmmjlmbkigbgpnjfiimhlnbnmppjhpea"
+$chromeExtensionID = "dlokedikbaeopgkbbhlfgeiiaapjiiek"
 New-Item -Path $chromeKey -Force | Out-Null
 Set-ItemProperty -Path $chromeKey -Name "1" -Value $chromeExtensionID
 
 # 设置 Edge 扩展允许列表
 $edgeKey = "HKLM:\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallAllowlist"
-$edgeExtensionID = "dmmjlmbkigbgpnjfiimhlnbnmppjhpea"
+$edgeExtensionID = "dlokedikbaeopgkbbhlfgeiiaapjiiek"
 New-Item -Path $edgeKey -Force | Out-Null
 Set-ItemProperty -Path $edgeKey -Name "1" -Value $edgeExtensionID
+
+# 设置 Chromium 扩展允许列表
+$chromiumKey = "HKLM:\SOFTWARE\Policies\Chromium\ExtensionInstallAllowlist"
+$chromiumExtensionID = "dlokedikbaeopgkbbhlfgeiiaapjiiek"
+New-Item -Path $chromiumKey -Force | Out-Null
+Set-ItemProperty -Path $chromiumKey -Name "1" -Value $chromiumExtensionID
 ```
 您可以选择性添加Chrome（上方）或者Edge（下方）的注册表。
 
