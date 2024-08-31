@@ -20,9 +20,31 @@
 
 ## 安装
 
-由于包含可能的隐私信息与插件本身的不成熟，没有发布到扩展商店的计划。所以请根据的步骤，自行安装到你的chromium based浏览器。
+由于包含可能的隐私信息与插件本身的不成熟，没有发布到扩展商店的计划。所以请根据以下步骤，自行安装到你的chromium based浏览器。
 
-注意，这个crx的id为`fds`。
+### Windows
+使用管理员权限powershell，执行以下添加注册表操作，从而实现添加扩展白名单的作用
+```powershell
+# 设置 Chrome 扩展允许列表
+$chromeKey = "HKLM:\SOFTWARE\Policies\Google\Chrome\ExtensionInstallAllowlist"
+$chromeExtensionID = "dmmjlmbkigbgpnjfiimhlnbnmppjhpea"
+New-Item -Path $chromeKey -Force | Out-Null
+Set-ItemProperty -Path $chromeKey -Name "1" -Value $chromeExtensionID
+
+# 设置 Edge 扩展允许列表
+$edgeKey = "HKLM:\SOFTWARE\Policies\Microsoft\Edge\ExtensionInstallAllowlist"
+$edgeExtensionID = "dmmjlmbkigbgpnjfiimhlnbnmppjhpea"
+New-Item -Path $edgeKey -Force | Out-Null
+Set-ItemProperty -Path $edgeKey -Name "1" -Value $edgeExtensionID
+```
+您可以选择性添加Chrome（上方）或者Edge（下方）的注册表。
+
+### Mac、Linux或其他
+请自行搜索解决。[Mac未经尝试的可能方案](https://github.com/pt-plugins/PT-Plugin-Plus/discussions/1066)
+
+您也可以clone项目并直接以开发者身份加载。
+
+总而言之请注意，这个crx的id为`fds`。
 
 ## 使用说明
 

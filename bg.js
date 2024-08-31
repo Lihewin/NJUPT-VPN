@@ -1,4 +1,4 @@
-// 将字符串转换为ArrayBuffer
+// 将字符串转换为 ArrayBuffer
 function str2ab(str) {
     var buf = new ArrayBuffer(str.length);
     var bufView = new Uint8Array(buf);
@@ -8,7 +8,7 @@ function str2ab(str) {
     return buf;
 }
 
-// 将ArrayBuffer转换为十六进制字符串
+// 将 ArrayBuffer 转换为十六进制字符串
 function ab2hex(buffer) {
     return Array.prototype.map.call(new Uint8Array(buffer), x => ('00' + x.toString(16)).slice(-2)).join('');
 }
@@ -39,24 +39,43 @@ async function encrypt(domainWithPort) {
 
 // 监听 action 点击事件
 chrome.action.onClicked.addListener(async function (tab) {
-    // 目标VPN地址前缀
-    const vpnPrefix = "https://vpn.njupt.edu.cn:8443/https/webvpn";
+    // 目标 VPN 地址前缀
+    const httpsVpnPrefix = "https://client.vpn.njupt.edu.cn:8443/https/webvpn";
+    const httpVpnPrefix = "https://client.vpn.njupt.edu.cn:8443/http/webvpn";
 
-    // 如果当前URL已经以目标VPN地址前缀开头，则不做处理
-    if (tab.url.startsWith(vpnPrefix)) {
-        return;
-    }
-
-    // 提取URL中的域名（包括端口）
+    // 解析当前 URL
     let url = new URL(tab.url);
     let domainWithPort = url.host; // 包括域名和端口（如果有）
 
-    // 使用AES-CBC加密域名+端口
-    let encryptedDomain = await encrypt(domainWithPort);
+    if (url.protocol === "https:") {
+        // 如果协议是 HTTPS
+        if (!tab.url.startsWith(httpsVpnPrefix)) {
+            // 使用 AES-CBC 加密域名+端口
+            let encryptedDomain = await encrypt(domainWithPort);
 
-    // 构造新的URL
-    let newUrl = vpnPrefix + encryptedDomain + url.pathname + url.search + url.hash;
+            // 构造新的 URL
+            let newUrl = httpsVpnPrefix + encryptedDomain + url.pathname + url.search + url.hash;
 
-    // 跳转到新的URL
-    chrome.tabs.create({ url: newUrl });
+            // 跳转到新的 URL
+            chrome.tabs.create({ url: newUrl });
+        }
+    } else if (url.protocol === "http:") {
+        // 如果协议是 HTTP
+        if (!tab.url.startsWith(httpVpnPrefix)) {
+            // 使用 AES-CBC 加密域名+端口
+            let encryptedDomain = await encrypt(domainWithPort);
+
+            // 构造新的 URL
+            let newUrl = httpVpnPrefix + encryptedDomain + url.pathname + url.search + url.hash;
+
+            // 跳转到新的 URL
+            chrome.tabs.create({ url: newUrl });
+        }
+    } else {
+        // 不支持的协议
+        chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            func: () => alert("不支持的协议！")
+        });
+    }
 });
